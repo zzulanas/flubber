@@ -5,9 +5,11 @@ import { getUsersPlaylists } from "../../../lib/spotify";
 import { getSession } from "next-auth/react";
 
 
-const spotifyRouter = createTRPCRouter({
-    getPlaylists: protectedProcedure.query(({ ctx }) => {
-      const session = getSession(ctx.session)
-      return getUsersPlaylists(session)
-    })
-})
+// const spotifyRouter = createTRPCRouter({
+//     getPlaylists: protectedProcedure.query(({ ctx }) => {
+//       const {
+//         token: {accessToken}
+//       } = getSession({ctx})
+//       return getUsersPlaylists(session)
+//     })
+// })
