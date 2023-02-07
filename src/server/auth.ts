@@ -47,6 +47,12 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    jwt({token, account}) {
+      if (account) {
+        token.accessToken = account.refresh_token;
+      }
+      return token;
+    },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
