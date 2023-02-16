@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
+  type JWT,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env/server.mjs";
 import { prisma } from "./db";
+import { LOGIN_URL, spotifyApi } from "./lib/spotify.js";
 
 /**
  * Module augmentation for `next-auth` types.
@@ -21,9 +24,18 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      accessToken: string;
+      refreshToken: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
+  }
+
+  interface JWT {
+    access_token: string;
+    expires_at: number
+    refresh_token: string;
+    error?: "RefreshAccessTokenError"
   }
 
   // interface User {
@@ -41,10 +53,7 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
-      }
+      session.user.id = user.id;
       return session;
     },
     jwt({token, account}) {
@@ -56,13 +65,10 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
     SpotifyProvider({
       clientId: env.SPOTIFY_CLIENT_ID,
       clientSecret: env.SPOTIFY_CLIENT_SECRET,
+      authorization: LOGIN_URL,
     }),
     /**
      * ...add more providers here
@@ -74,6 +80,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      **/
   ],
+  secret: process.env.JWT_SECRET,
 };
 
 /**
