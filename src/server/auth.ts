@@ -108,8 +108,9 @@ async function refreshAccessToken(newSession: Session) : Promise<{ access_token:
     }
 
     const refresh_token = userAccount?.refresh_token;
-
-    spotifyApi.setRefreshToken(refresh_token)
+    if (refresh_token){
+      spotifyApi.setRefreshToken(refresh_token)
+    }
     const access_response = await spotifyApi.refreshAccessToken()
 
     if (!(access_response.statusCode == 200)) {

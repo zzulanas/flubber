@@ -57,11 +57,9 @@ const getUserAccountFromId = async (id) => {
 
 // Get User Playlists 
 export const getUsersPlaylists = async (id) => {
-    console.log("ID", id)
-    const account = await getUserAccountFromId(id);
-    console.log("ACCESS TOKEN", account.access_token)
-    spotifyApi.setAccessToken(account.access_token)
-    const data = spotifyApi.getUserPlaylists()
-    console.log(data.body)
-    return data;
-  };
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token)
+  const data = spotifyApi.getUserPlaylists()
+  return data;
+};
+

@@ -5,8 +5,6 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { getUsersPlaylists } from "../../lib/spotify";
-import { getSession } from "next-auth/react";
-import { prisma } from "@prisma/client";
 
 
 export const spotifyRouter = createTRPCRouter({

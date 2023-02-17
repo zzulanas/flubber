@@ -6,10 +6,12 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
 import { ReactNode, useState } from "react";
+import { Sidebar } from "../components/Sidebar";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const {data: spotify} = api.spotify.getPlaylists.useQuery()
+  const {data: sessionData} = useSession();
   const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined = spotify?.body.items;
   const playlistElements = playlists?.map((item: SpotifyApi.PlaylistObjectSimplified) => {
     return (
@@ -28,6 +30,7 @@ const Home: NextPage = () => {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
+          {sessionData && <Sidebar sessionData={sessionData}/>}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
@@ -66,27 +69,6 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const PlaylistList: React.FC = () => {
-  const { data: sessionData } = useSession();
-  const [ playlistItems, setPlaylistItems ] = useState<SpotifyApi.PlaylistObjectSimplified[] | undefined>([]);
-  const { data: userPlaylists } = api.spotify.getPlaylists.useQuery()
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined = userPlaylists?.body.items;
-  
-  setPlaylistItems(playlists)
-  console.log(playlists)
-
-  const elements = playlistItems?.map((item: SpotifyApi.PlaylistObjectSimplified) => {
-    return (
-      <li key={item.id}>{item.name}</li>
-    )
-  })
-
-  return (
-    <ul>{elements}</ul>
-  )
-}
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
