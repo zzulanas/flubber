@@ -6,7 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
 import { ReactNode, useState } from "react";
-import { Sidebar } from "../components/Sidebar";
+import Sidebar from "./components/sidebar";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });

@@ -7,7 +7,7 @@ interface SidebarProps {
     sessionData: Session
 }
 
-export const Sidebar: FC<SidebarProps> = ({sessionData}) => {
+const Sidebar: FC<SidebarProps> = ({sessionData}) => {
     return (
         <div>
             <h1 className="text-white text-4xl">Hello {sessionData?.user.name}</h1>
@@ -19,3 +19,5 @@ export const Sidebar: FC<SidebarProps> = ({sessionData}) => {
         </div>
     )
 }
+
+export default Sidebar;
