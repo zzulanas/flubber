@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Avatar: FC = () => {
     const {data: sessionData} = useSession();
-    const greeting: string = () => {
+    const greeting = () => {
         const greetings = [
             "hi",
             "howdy",
