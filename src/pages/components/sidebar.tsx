@@ -1,21 +1,25 @@
 // Sidebar component for main page
-import type { Session } from "next-auth";
-import Image from "next/image";
 import type { FC } from "react";
+import { api } from "../../utils/api";
+import Avatar from "./avatar";
 
-interface SidebarProps {
-    sessionData: Session
-}
-
-const Sidebar: FC<SidebarProps> = ({sessionData}) => {
+const Sidebar: FC = () => {
+    const {data: spotify} = api.spotify.getPlaylists.useQuery()
+    const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined = spotify?.body.items;
+    const playlistElements = playlists?.map((item: SpotifyApi.PlaylistObjectSimplified) => {
+        return (
+          <li className="text-white text-2xl" key={item.id}><a href={item.external_urls.spotify}>{item.name}</a></li>
+        )
+      })
+      
     return (
-        <div>
-            <h1 className="text-white text-4xl">Hello {sessionData?.user.name}</h1>
-            { sessionData?.user.image && <Image 
-                src={sessionData?.user.image}
-                alt="User Profile Image"
-                width={100}
-                height={100}></Image> }
+        <div className="drawer-side">
+            <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
+            <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+            <li><Avatar/></li>
+            <div className="divider"></div>
+            {playlistElements}
+            </ul>
         </div>
     )
 }
