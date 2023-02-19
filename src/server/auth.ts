@@ -11,7 +11,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env/server.mjs";
 import { prisma } from "./db";
 import { LOGIN_URL, spotifyApi } from "./lib/spotify.js";
-import { json } from "stream/consumers";
 import { Session } from "next-auth/core/types.js";
 
 /**
@@ -76,15 +75,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.SPOTIFY_CLIENT_SECRET,
       authorization: LOGIN_URL,
     }),
-    /**
-     * ...add more providers here
-     *
-     * Most other providers require a bit more work than the Discord provider.
-     * For example, the GitHub provider requires you to add the
-     * `refresh_token_expires_in` field to the Account model. Refer to the
-     * NextAuth.js docs for the provider you want to use. Example:
-     * @see https://next-auth.js.org/providers/github
-     **/
   ],
   secret: process.env.JWT_SECRET,
 };
