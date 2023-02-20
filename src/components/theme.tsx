@@ -1,4 +1,8 @@
-import React, { Dispatch, ReactNode, SetStateAction } from "react";
+import React, {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from "react";
 
 type ThemeContextType =
   | "light"
@@ -52,4 +56,4 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export const useTheme = () => React.useContext(ThemeContext);
+export const useTheme = (): ThemeContextProps => React.useContext(ThemeContext);

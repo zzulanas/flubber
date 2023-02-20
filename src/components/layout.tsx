@@ -1,6 +1,6 @@
-import { ReactNode, useContext } from "react";
-import { useState } from "react";
-import { theme_transition } from "../styles/global-vars";
+import React from "react";
+import { type ReactNode, type FC } from "react";
+import { themeTransition } from "../styles/global-vars";
 import Sidebar from "./sidebar";
 import { useTheme } from "./theme";
 
@@ -8,12 +8,12 @@ interface Props {
   children?: ReactNode;
 }
 
-export default function Layout({ children }: Props) {
+export const Layout: FC<{ children: ReactNode }> = ({ children }: Props) => {
   const { themeType } = useTheme();
   return (
     <>
       <main
-        className={`drawer-mobile drawer ${theme_transition}`}
+        className={`drawer-mobile drawer ${themeTransition}`}
         data-theme={themeType}
       >
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -30,4 +30,4 @@ export default function Layout({ children }: Props) {
       </main>
     </>
   );
-}
+};

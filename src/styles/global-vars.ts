@@ -1,3 +1,3 @@
 // List of global style variables to use
 
-export const theme_transition = "transition ease-in duration-500";
+export const themeTransition = "transition ease-in duration-500";

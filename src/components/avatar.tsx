@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
-import { FC } from "react";
+import { type FC } from "react";
 import Image from "next/image";
-import { useState } from "react";
+import React from "react";
 
 const Avatar: FC = () => {
   const { data: sessionData } = useSession();
@@ -10,7 +10,7 @@ const Avatar: FC = () => {
     <div className="justify-left flex">
       <div className="avatar">
         <div className="w-12 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-          {sessionData?.user.image && (
+          {sessionData?.user.image != null && (
             <Image
               src={sessionData?.user.image}
               alt="User Profile Image"

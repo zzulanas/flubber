@@ -11,7 +11,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env/server.mjs";
 import { prisma } from "./db";
 import { LOGIN_URL, spotifyApi } from "./lib/spotify.js";
-import { Session } from "next-auth/core/types.js";
+import { type Session } from "next-auth/core/types.js";
 
 /**
  * Module augmentation for `next-auth` types.
@@ -103,21 +103,21 @@ async function refreshAccessToken(
       }
     }
 
-    const refresh_token = userAccount?.refresh_token;
-    if (refresh_token) {
-      spotifyApi.setRefreshToken(refresh_token);
+    const refreshTokenAcct = userAccount?.refresh_token;
+    if (refreshTokenAcct) {
+      spotifyApi.setRefreshToken(refreshTokenAcct);
     }
-    const access_response = await spotifyApi.refreshAccessToken();
+    const accessResponse = await spotifyApi.refreshAccessToken();
 
-    if (!(access_response.statusCode == 200)) {
+    if (!(accessResponse.statusCode === 200)) {
       console.error("Error refreshing auth token");
     }
 
     await prisma.account.update({
       where: { id: userAccount?.id },
       data: {
-        refresh_token: access_response.body.refresh_token ?? refresh_token,
-        access_token: access_response.body.access_token,
+        refresh_token: accessResponse.body.refresh_token ?? refreshTokenAcct,
+        access_token: accessResponse.body.access_token,
         expires_at: Math.floor(new Date().getTime() / 1000) + 3600,
       },
     });
@@ -132,20 +132,20 @@ async function refreshAccessToken(
       refresh_token: string | null | undefined;
     } = {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      access_token: access_response.body.access_token ?? refresh_token,
+      access_token: accessResponse.body.access_token ?? refreshTokenAcct,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      refresh_token: access_response.body.refresh_token
-        ? access_response.body.refresh_token
-        : refresh_token,
+      refresh_token: accessResponse.body.refresh_token
+        ? accessResponse.body.refresh_token
+        : refreshTokenAcct,
     };
 
-    return new Promise((resolve) => {
+    return await new Promise((resolve) => {
       resolve(response);
     });
   } catch (error) {
     console.log(error);
   }
-  return new Promise((resolve) => {
+  return await new Promise((resolve) => {
     resolve(undefined);
   });
 }
@@ -156,9 +156,10 @@ async function refreshAccessToken(
  *
  * @see https://next-auth.js.org/configuration/nextjs
  **/
-export const getServerAuthSession = (ctx: {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const getServerAuthSession = async (ctx: {
   req: GetServerSidePropsContext["req"];
   res: GetServerSidePropsContext["res"];
 }) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+  return await getServerSession(ctx.req, ctx.res, authOptions);
 };

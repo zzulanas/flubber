@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { z } from "zod";
+// import { z } from "zod";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { getUsersPlaylists } from "../../lib/spotify";
 
