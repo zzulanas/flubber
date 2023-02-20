@@ -12,7 +12,7 @@ export const ThemeContext = React.createContext<ThemeContextProps>({
   setCurrentTheme: null
 })
 
-export const ThemeProvider: React.FC = ({ children }: any) => {
+export const ThemeProvider: React.FC<{ children: ReactNode}> = ({children}) => {
   const [currentTheme, setCurrentTheme] = React.useState<ThemeContextType>('forest');
 
   return (

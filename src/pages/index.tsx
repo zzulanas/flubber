@@ -6,13 +6,15 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
 import Sidebar from "./components/sidebar";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useTheme } from "./components/theme";
+import { theme_transition } from "../styles/global-vars";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const {data: spotify} = api.spotify.getPlaylists.useQuery()
   const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined = spotify?.body.items;
-  const [theme, setTheme] = useState("forest");
+  const {themeType, setCurrentTheme} = useTheme(); 
   const playlistElements = playlists?.map((item: SpotifyApi.PlaylistObjectSimplified) => {
     return (
       <li key={item.id} className="text-white">{item.name}</li>
@@ -25,12 +27,12 @@ const Home: NextPage = () => {
         <meta name="description" content="flub ur music" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="transition" data-theme={theme}>
+      <main className={theme_transition} data-theme={themeType}>
 
 
         <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={theme == "forest" ? () => setTheme("aqua") : () => setTheme("forest")}
+        onClick={themeType == "forest" ? () => setCurrentTheme?.("aqua") : () => setCurrentTheme?.("forest")}
       >
         TEST
       </button>
