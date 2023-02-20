@@ -1,5 +1,36 @@
 # flubber 🧽
 
+listen to Spotify with your friends! 🕺💃
+
+track your listening stats 🎧
+
+tell your friends their music taste sucks 😈
+
+view prod site: https://flubber-three.vercel.app/
+
+## Get Started
+
+- Create a `.env` file with credentials for Spotify
+- Generate a Prisma Schema and hook up to your preferred DB
+
+## Linting/Formatting
+
+This project uses Husky to run pre-commit linting and formatting for every commit. check out `.husky/pre-commit/.sh` to see what's run before every commit.
+
+## Contributing
+
+In order to contribute:
+
+1. Create an issue with the appropriate tag
+   1. (feature) for new features
+   2. (bug) to fix a bug
+2. Create a branch relate to issue (can be auto created in issue creator on bottom right)
+3. Code up your feature
+4. Push up your branch and make a PR
+5. wait for our lord and savior's approval/merge (pls request from @zzulanas)
+
+## Learn More
+
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
 - [Next.js](https://nextjs.org)
@@ -7,13 +38,6 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [Prisma](https://prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
-
-## Get Started
-
-- Create a `.env` file with credentials for Spotify
-- Generate a Prisma Schema and hook up to your preferred DB
-
-## Learn More
 
 To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
