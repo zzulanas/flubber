@@ -12,6 +12,7 @@
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "test": "echo \"TODO: make tests\"",
     "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
     "format": "prettier --write ."
   },
@@ -64,7 +65,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo \"[Husky] pre-commit\""
+      "pre-commit": "bash ./pre-commit.sh"
     }
   }
 }
