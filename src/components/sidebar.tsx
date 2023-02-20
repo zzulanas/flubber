@@ -1,7 +1,7 @@
 // Sidebar component for main page
 import type { FC } from "react";
-import { theme_transition } from "../../styles/global-vars";
-import { api } from "../../utils/api";
+import { theme_transition } from "../styles/global-vars";
+import { api } from "../utils/api";
 import Avatar from "./avatar";
 
 const Sidebar: FC = () => {

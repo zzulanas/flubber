@@ -1,6 +1,6 @@
 import { ReactNode, useContext } from "react"
 import { useState } from "react";
-import { theme_transition } from "../../styles/global-vars";
+import { theme_transition } from "../styles/global-vars";
 import Sidebar from "./sidebar"
 import { useTheme } from "./theme";
 

@@ -6,3 +6,5 @@ const Profile: NextPage = () => {
         <h1>THIS IS A PAGE</h1>
     )
 }
+
+export default Profile;
