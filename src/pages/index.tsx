@@ -9,14 +9,8 @@ import { theme_transition } from "../styles/global-vars";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  const {data: spotify} = api.spotify.getPlaylists.useQuery()
-  const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined = spotify?.body.items;
-  const {themeType, setCurrentTheme} = useTheme(); 
-  const playlistElements = playlists?.map((item: SpotifyApi.PlaylistObjectSimplified) => {
-    return (
-      <li key={item.id} className="text-white">{item.name}</li>
-    )
-  })
+  const { data: spotify } = api.spotify.getPlaylists.useQuery();
+  const { themeType, setCurrentTheme } = useTheme();
   return (
     <>
       <Head>
@@ -25,21 +19,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={theme_transition} data-theme={themeType}>
-
-
         <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={themeType == "forest" ? () => setCurrentTheme?.("aqua") : () => setCurrentTheme?.("forest")}
-      >
-        TEST
-      </button>
-    
-            <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
-        
-      
+          className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+          onClick={
+            themeType == "forest"
+              ? () => setCurrentTheme?.("aqua")
+              : () => setCurrentTheme?.("forest")
+          }
+        >
+          TEST
+        </button>
+
+        <p className="text-2xl text-white">
+          {hello.data ? hello.data.greeting : "Loading tRPC query..."}
+        </p>
+        <AuthShowcase />
       </main>
     </>
   );
@@ -52,7 +46,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (
