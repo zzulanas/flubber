@@ -1,6 +1,7 @@
 // Sidebar component for main page
 import type { FC } from "react";
-import { api } from "../../utils/api";
+import { theme_transition } from "../styles/global-vars";
+import { api } from "../utils/api";
 import Avatar from "./avatar";
 
 const Sidebar: FC = () => {
@@ -13,7 +14,7 @@ const Sidebar: FC = () => {
       })
       
     return (
-        <div className="drawer-side">
+        <div className={`drawer-side ${theme_transition}`}>
             <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
             <ul className="menu p-4 w-80 bg-base-100 text-base-content">
             <li><Avatar/></li>
