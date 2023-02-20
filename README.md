@@ -9,8 +9,9 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [tRPC](https://trpc.io)
 
 ## Get Started
-* Create a `.env` file with credentials for Spotify
-* Generate a Prisma Schema and hook up to your preferred DB
+
+- Create a `.env` file with credentials for Spotify
+- Generate a Prisma Schema and hook up to your preferred DB
 
 ## Learn More
 
