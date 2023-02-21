@@ -10,8 +10,15 @@ view prod site: https://flubber-three.vercel.app/
 
 ## Get Started
 
-- Create a `.env` file with credentials for Spotify
+- Create a `.env` file with credentials for Spotify (look at `.env.example`)
 - Generate a Prisma Schema and hook up to your preferred DB
+- `npm run dev` should start your dev server on `localhost:3000`
+- `npx prisma studio` should give you a view of your DB through Prisma
+- Login with your Spotify account and have fun!
+
+## Vercel Preview
+
+In order to preview the website on Vercel, merge your changes into the `preview` branch and access the page at
 
 ## Linting/Formatting
 
