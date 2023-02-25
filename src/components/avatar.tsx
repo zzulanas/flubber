@@ -3,7 +3,11 @@ import { type FC } from "react";
 import Image from "next/image";
 import React from "react";
 
-const Avatar: FC = () => {
+interface AvatarProps {
+  name?: string;
+}
+
+const Avatar: FC<AvatarProps> = (props: AvatarProps) => {
   const { data: sessionData } = useSession();
 
   return (
@@ -20,8 +24,8 @@ const Avatar: FC = () => {
           )}
         </div>
       </div>
-      <h1 className="text-grey ml-5 text-center text-2xl">
-        {sessionData?.user.name}
+      <h1 className="text-grey ml-5 text-center text-2xl font-bold">
+        {props.name ?? sessionData?.user.name}
       </h1>
     </div>
   );

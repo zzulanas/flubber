@@ -4,9 +4,10 @@ import type { FC } from "react";
 import { themeTransition } from "../styles/global-vars";
 import { api } from "../utils/api";
 import Avatar from "./avatar";
+import Link from "next/link";
 
 const Sidebar: FC = () => {
-  const { data: spotify } = api.spotify.getPlaylists.useQuery();
+  const { data: spotify } = api.spotifyRouter.getPlaylists.useQuery();
   const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined =
     spotify?.body.items;
   const playlistElements = playlists?.map(
@@ -28,6 +29,8 @@ const Sidebar: FC = () => {
         </li>
         <div className="divider"></div>
         {playlistElements}
+        <div className="divider"></div>
+        <Link href="/profile">Settings</Link>
       </ul>
     </div>
   );

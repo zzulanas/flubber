@@ -52,3 +52,27 @@ export const getUsersPlaylists = async (id) => {
   const data = spotifyApi.getUserPlaylists();
   return data;
 };
+
+// Get User Info
+export const getUserInfo = async (id) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getUser(account.providerAccountId);
+  return data;
+};
+
+// Get User top songs
+export const getUserTopSongs = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getMyTopTracks(options);
+  return data;
+};
+
+// Get User Top Albums
+export const getUserTopAlbums = async (id, count) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getUserTopAlbums(account.providerAccountId, count);
+  return data;
+};
