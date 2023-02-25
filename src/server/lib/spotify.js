@@ -70,9 +70,36 @@ export const getUserTopSongs = async (id, options) => {
 };
 
 // Get User Top Albums
-export const getUserTopAlbums = async (id, count) => {
+export const getUserTopArtists = async (id, options) => {
   const account = await getUserAccountFromId(id);
   spotifyApi.setAccessToken(account.access_token);
-  const data = spotifyApi.getUserTopAlbums(account.providerAccountId, count);
+  const data = spotifyApi.getMyTopArtists(options);
   return data;
+};
+
+// Add item to playback queue then skip to next song to play it
+export const playSong = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const addItemData = await fetch(
+    `https://api.spotify.com/v1/me/player/queue?uri=${options.uri}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${account.access_token}`,
+      },
+    }
+  );
+
+  const skipData = await fetch("https://api.spotify.com/v1/me/player/next", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${account.access_token}`,
+    },
+  });
+
+  if (skipData.status === 204 && addItemData.status === 204) {
+    return true;
+  }
+  return false;
 };

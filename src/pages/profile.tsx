@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import React from "react";
+import Artist from "../components/artist";
 import Song from "../components/song";
 import { api } from "../utils/api";
 
@@ -12,14 +13,12 @@ const Profile: NextPage = () => {
     offset: 0,
   });
   // TODO: add this functionality
-  // const { data: userTopArtistData } =
-  //   api.spotifyRouter.getUserTopArtists.useQuery({
-  //     time_range: "medium_term",
-  //     limit: 5,
-  //     offset: 0,
-  //   });
-  console.log(userTopSongData);
-  console.log(userData);
+  const { data: userTopArtistData } =
+    api.spotifyRouter.getUserTopArtists.useQuery({
+      time_range: "medium_term",
+      limit: 5,
+      offset: 0,
+    });
   return (
     <div className="container overflow-auto">
       <div className="container flex items-center p-10">
@@ -38,19 +37,24 @@ const Profile: NextPage = () => {
         </h1>
       </div>
 
-      {userTopSongData && (
-        <div className="grid grid-cols-2 p-10">
+      <div className="grid grid-cols-2 p-10">
+        {userTopSongData && (
           <div>
             <h1 className="text-bold text-4xl text-white">Top Songs</h1>
             {userTopSongData.items.map((song) => {
               return <Song key={song.id} songData={song} />;
             })}
           </div>
+        )}
+        {userTopArtistData && (
           <div>
             <h1 className="text-bold text-4xl text-white">Top Artists</h1>
+            {userTopArtistData.items.map((artist) => {
+              return <Artist key={artist.id} artistData={artist} />;
+            })}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -3,14 +3,20 @@ import React from "react";
 import { type FC } from "react";
 
 import Image from "next/image";
-import Link from "next/link";
 import ReactAudioPlayer from "react-audio-player";
+import { api } from "../utils/api";
 
 interface SongProps {
   songData: SpotifyApi.TrackObjectFull;
 }
 
 const Song: FC<SongProps> = (props: SongProps) => {
+  const playSong = api.spotifyRouter.playSong.useMutation();
+
+  const handlePlaySong = (): void => {
+    const uri = props.songData.uri;
+    playSong.mutate({ uri });
+  };
   return (
     <div>
       {props.songData && (
@@ -32,11 +38,13 @@ const Song: FC<SongProps> = (props: SongProps) => {
             </figure>
 
             <div className="container flex bg-accent">
-              <Link href={props.songData.uri} className="card-title">
-                <h1 className="">{props.songData.name}</h1>
-              </Link>
+              <div className="card-title">
+                <h1 className="text-black">{props.songData.name}</h1>
+              </div>
               <div className="card-actions justify-end">
-                <button className="btn-primary btn">Watch</button>
+                <button className="btn-primary btn" onClick={handlePlaySong}>
+                  Play Song
+                </button>
               </div>
             </div>
           </div>
