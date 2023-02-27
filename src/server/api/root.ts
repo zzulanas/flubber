@@ -9,7 +9,7 @@ import { spotifyRouter } from "./routers/spotify";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  spotify: spotifyRouter,
+  spotifyRouter,
 });
 
 // export type definition of API

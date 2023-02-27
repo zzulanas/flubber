@@ -52,3 +52,62 @@ export const getUsersPlaylists = async (id) => {
   const data = spotifyApi.getUserPlaylists();
   return data;
 };
+
+// Get User Info
+export const getUserInfo = async (id) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getUser(account.providerAccountId);
+  return data;
+};
+
+// Get User top songs
+export const getUserTopSongs = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getMyTopTracks(options);
+  return data;
+};
+
+// Get User Top Albums
+export const getUserTopArtists = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getMyTopArtists(options);
+  return data;
+};
+
+// Add item to playback queue then skip to next song to play it
+export const playSong = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const addItemData = await fetch(
+    `https://api.spotify.com/v1/me/player/queue?uri=${options.uri}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${account.access_token}`,
+      },
+    }
+  );
+
+  const skipData = await fetch("https://api.spotify.com/v1/me/player/next", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${account.access_token}`,
+    },
+  });
+
+  if (skipData.status === 204 && addItemData.status === 204) {
+    return true;
+  }
+  return false;
+};
+
+// Get Artists top tracks
+export const getArtistsTopTracks = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getArtistTopTracks(options.id, options.country);
+  return data;
+};

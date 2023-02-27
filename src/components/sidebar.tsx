@@ -4,9 +4,10 @@ import type { FC } from "react";
 import { themeTransition } from "../styles/global-vars";
 import { api } from "../utils/api";
 import Avatar from "./avatar";
+import Link from "next/link";
 
 const Sidebar: FC = () => {
-  const { data: spotify } = api.spotify.getPlaylists.useQuery();
+  const { data: spotify } = api.spotifyRouter.getPlaylists.useQuery();
   const playlists: SpotifyApi.PlaylistObjectSimplified[] | undefined =
     spotify?.body.items;
   const playlistElements = playlists?.map(
@@ -24,10 +25,14 @@ const Sidebar: FC = () => {
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
       <ul className="menu w-80 bg-base-100 p-4 text-base-content">
         <li>
-          <Avatar />
+          <Link href={"/"}>
+            <Avatar />
+          </Link>
         </li>
         <div className="divider"></div>
         {playlistElements}
+        <div className="divider"></div>
+        <Link href="/profile">Settings</Link>
       </ul>
     </div>
   );
