@@ -25,7 +25,9 @@ const Sidebar: FC = () => {
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
       <ul className="menu w-80 bg-base-100 p-4 text-base-content">
         <li>
-          <Avatar />
+          <Link href={"/"}>
+            <Avatar />
+          </Link>
         </li>
         <div className="divider"></div>
         {playlistElements}

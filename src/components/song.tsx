@@ -3,7 +3,6 @@ import React from "react";
 import { type FC } from "react";
 
 import Image from "next/image";
-import ReactAudioPlayer from "react-audio-player";
 import { api } from "../utils/api";
 
 interface SongProps {
@@ -21,11 +20,7 @@ const Song: FC<SongProps> = (props: SongProps) => {
     <div>
       {props.songData && (
         <div className="p-5">
-          {props.songData?.preview_url && (
-            <ReactAudioPlayer src={props.songData?.preview_url} />
-          )}
-
-          <div className="container card card-side bg-base-100 shadow-xl">
+          <div className="container card card-side bg-accent shadow-xl">
             <figure>
               {props?.songData.album.images[0] && (
                 <Image
@@ -37,11 +32,16 @@ const Song: FC<SongProps> = (props: SongProps) => {
               )}
             </figure>
 
-            <div className="container flex bg-accent">
-              <div className="card-title">
-                <h1 className="text-black">{props.songData.name}</h1>
+            <div className="container flex">
+              <div className="card-title p-5">
+                <span className="font-bold text-black">
+                  {props.songData.name} -{" "}
+                  <span className="font-normal">
+                    {props?.songData.artists[0]?.name}
+                  </span>
+                </span>
               </div>
-              <div className="card-actions justify-end">
+              <div className="card-actions justify-end self-center">
                 <button className="btn-primary btn" onClick={handlePlaySong}>
                   Play Song
                 </button>

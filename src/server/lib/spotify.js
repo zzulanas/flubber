@@ -103,3 +103,11 @@ export const playSong = async (id, options) => {
   }
   return false;
 };
+
+// Get Artists top tracks
+export const getArtistsTopTracks = async (id, options) => {
+  const account = await getUserAccountFromId(id);
+  spotifyApi.setAccessToken(account.access_token);
+  const data = spotifyApi.getArtistTopTracks(options.id, options.country);
+  return data;
+};
