@@ -91,7 +91,7 @@ export const spotifyRouter = createTRPCRouter({
         },
       });
       const res = await getArtistsTopTracks(user?.id, input);
-      playSong(user?.id, { uri: res.body.tracks[0]?.uri });
+      await playSong(user?.id, { uri: res.body.tracks[0]?.uri });
     }),
 });
 
